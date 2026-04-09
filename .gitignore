@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+
+# Ignore the dataset if it gets too large (optional, commented out for now since it's small)
+# data/passwords_dataset.csv

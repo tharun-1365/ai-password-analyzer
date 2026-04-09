@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Password Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Password <span class="highlight">Intelligence</span></h1>
+            <p>Advanced machine learning pattern & weakness detection</p>
+        </header>
+
+        <main class="glass-panel">
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password-input" placeholder="Type a password to analyze..." autocomplete="off">
+                <button type="button" id="toggle-visibility" class="icon-button"><i class="fa-solid fa-eye-slash"></i></button>
+            </div>
+
+            <div id="loading-spinner" class="hidden">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing...
+            </div>
+
+            <div id="results-dashboard" class="hidden">
+                <div class="strength-meter">
+                    <div class="strength-header">
+                        <h2 id="strength-label">Weak</h2>
+                        <span id="ai-score" class="score-badge">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="metric-data">
+                            <span class="metric-value" id="entropy-score">0</span>
+                            <span class="metric-label">Entropy Bits</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon"><i class="fa-solid fa-ruler-horizontal"></i></div>
+                        <div class="metric-data">
+                            <span class="metric-value" id="length-score">0</span>
+                            <span class="metric-label">Length</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-badges">
+                    <div class="badge" id="badge-upper">A-Z <span class="count">0</span></div>
+                    <div class="badge" id="badge-lower">a-z <span class="count">0</span></div>
+                    <div class="badge" id="badge-digits">0-9 <span class="count">0</span></div>
+                    <div class="badge" id="badge-special">!@# <span class="count">0</span></div>
+                </div>
+
+                <div class="feedback-section">
+                    <h3><i class="fa-solid fa-clipboard-list"></i> Security Report</h3>
+                    <ul id="feedback-list">
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Built for Academic Demonstration</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
