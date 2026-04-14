@@ -16,10 +16,42 @@
         </header>
 
         <main class="glass-panel">
-            <div class="input-group">
-                <i class="fa-solid fa-lock input-icon"></i>
-                <input type="password" id="password-input" placeholder="Type a password to analyze..." autocomplete="off">
-                <button type="button" id="toggle-visibility" class="icon-button"><i class="fa-solid fa-eye-slash"></i></button>
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-login">Login</button>
+                <button class="tab-btn" id="tab-register">Register</button>
+            </div>
+
+            <div class="form-container">
+                <div class="input-group">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="username-input" placeholder="Username" autocomplete="off">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+                    <button type="button" id="toggle-visibility" class="icon-button"><i class="fa-solid fa-eye-slash"></i></button>
+                </div>
+                
+                <!-- Authentication Status Message -->
+                <div id="auth-message" class="hidden message"></div>
+                
+                <button id="submit-btn" class="primary-btn">Login</button>
+            </div>
+
+            <!-- OTP Modal Overlay -->
+            <div id="otp-modal" class="modal hidden">
+                <div class="modal-content">
+                    <i class="fa-solid fa-triangle-exclamation warning-icon" style="color:var(--weak-color); font-size:2rem;"></i>
+                    <h2>Unusual Behavior Detected</h2>
+                    <p>We noticed an anomaly in your typing patterns. Please verify your identity.</p>
+                    <div class="input-group">
+                        <i class="fa-solid fa-key input-icon"></i>
+                        <input type="text" id="otp-input" placeholder="Enter OTP (try 1234)" maxlength="6">
+                    </div>
+                    <button id="verify-otp-btn" class="primary-btn">Verify Identity</button>
+                    <p id="otp-message" class="hidden message"></p>
+                </div>
             </div>
 
             <div id="loading-spinner" class="hidden">

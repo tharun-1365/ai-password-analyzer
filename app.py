@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from core.feature_extractor import extract_features, get_feedback, is_common_password
+from core.biometrics import analyze_keystrokes
+from core.database import register_user, authenticate_user, save_keystroke_profile, init_db
 import pickle
 import os
 
 app = Flask(__name__)
+
+# Initialize Local Database
+init_db()
 
 # Load the model globally
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "core", "rf_model.pkl")
@@ -21,6 +26,76 @@ else:
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/api/register", methods=["POST"])
+def register():
+    data = request.get_json()
+    username = data.get("username", "")
+    password = data.get("password", "")
+    
+    if not username or not password:
+        return jsonify({"success": False, "message": "Username and password required"})
+        
+    success, message = register_user(username, password)
+    return jsonify({"success": success, "message": message})
+
+@app.route("/api/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    username = data.get("username", "")
+    password = data.get("password", "")
+    keystroke_data = data.get("keystrokes", {})
+    
+    if not username or not password:
+        return jsonify({"success": False, "status": "FAILED", "message": "Missing credentials"})
+        
+    # 1. Validate Password
+    is_valid, user_id = authenticate_user(username, password)
+    
+    if not is_valid:
+         return jsonify({"success": False, "status": "FAILED", "message": "Invalid password"})
+         
+    # 2. Extract Keystroke Features
+    try:
+        # 3. Analyze Behavior 
+        is_suspicious, distance, biometrics_message = analyze_keystrokes(user_id, keystroke_data)
+        
+        # Security Auditing Log
+        if is_suspicious:
+            print(f"SUSPICIOUS ACTIVITY LOG - User: {username} - Reason: {biometrics_message} - Metric Diff: {distance:.2f}")
+
+        # 4. Save to profile
+        save_keystroke_profile(user_id, keystroke_data)
+        
+        if is_suspicious:
+            return jsonify({
+                "success": False, 
+                "status": "SUSPICIOUS", 
+                "message": "Unusual typing behavior detected. Verify identity. (" + biometrics_message + ")",
+                "distance": distance
+            })
+            
+        return jsonify({
+            "success": True, 
+            "status": "SUCCESS", 
+            "message": "Login successful - Behavior matched.",
+            "distance": distance
+        })
+        
+    except Exception as e:
+        print(f"Login error processing biometrics: {e}")
+        return jsonify({"success": False, "status": "FAILED", "message": "System error processing login"})
+
+@app.route("/api/verify_otp", methods=["POST"])
+def verify_otp():
+    # Mock OTP verification
+    data = request.get_json()
+    otp = data.get("otp", "")
+    
+    if otp == "1234":
+         return jsonify({"success": True, "message": "Identity verified successfully"})
+         
+    return jsonify({"success": False, "message": "Invalid verification code"})
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze():

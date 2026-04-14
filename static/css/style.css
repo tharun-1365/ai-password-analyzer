@@ -85,7 +85,7 @@ header p {
     font-size: 1.2rem;
 }
 
-#password-input {
+#password-input, #username-input, #otp-input {
     width: 100%;
     padding: 1.2rem 3.5rem;
     font-size: 1.2rem;
@@ -99,7 +99,7 @@ header p {
     box-sizing: border-box;
 }
 
-#password-input:focus {
+#password-input:focus, #username-input:focus, #otp-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
 }
@@ -342,3 +342,110 @@ footer {
 .shake {
     animation: shake 0.4s ease-in-out;
 }
+
+/* Auth Added Styles */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.primary-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1rem;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.5);
+}
+
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.message.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--weak-color);
+    border: 1px solid var(--weak-color);
+}
+
+.message.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--strong-color);
+    border: 1px solid var(--strong-color);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--bg-color);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.modal-content h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
