@@ -7,7 +7,7 @@ BASELINE_THRESHOLD = 3
 
 # Threshold for Euclidean distance to flag as suspicious
 # (Configurable based on real-world data collection, lower is stricter)
-ANOMALY_THRESHOLD = 900 
+ANOMALY_THRESHOLD = 1500 
 
 def extract_vector(features):
     """
@@ -39,12 +39,12 @@ def analyze_keystrokes(user_id, current_features):
     hesitation_count = current_features.get('hesitation_count', 0)
 
     # --- Rule Based Hard Checks ---
-    if backspace_count > 2:
-        return True, 100.0, "Too many backspaces used."
-    if delete_count > 0:
-        return True, 100.0, "Corrections made via Delete."
-    if hesitation_count > 0:
-        return True, 100.0, "Significant typing pauses detected (>500ms)."
+    if backspace_count > 4:
+        return True, 100.0, "Excessive backspaces used."
+    if delete_count > 2:
+        return True, 100.0, "Multiple corrections made via Delete."
+    if hesitation_count > 3:
+        return True, 100.0, "Repeated significant typing pauses detected."
 
     # Not enough data for baseline yet -> allow it
     if len(history) < BASELINE_THRESHOLD:

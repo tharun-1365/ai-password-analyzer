@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevUp = keystrokeEvents[i-1].upTime;
             const flightTime = currentDown - prevUp;
             
-            if (flightTime > 500) {
+            if (flightTime > 800) {
                 hesitationCount++;
             }
             
